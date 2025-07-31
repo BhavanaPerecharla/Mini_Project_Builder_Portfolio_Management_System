@@ -1,8 +1,6 @@
 # Mini_Project_Builder_Portfolio_Management_System
 A role-based portfolio management system for builders, clients, and admins to manage construction projects, tasks, budgets, and timelines.
 
-# 🏗️ Builder Portfolio Management System
-
 This is a Spring Boot-based mini project that manages user registrations and project portfolios for a real estate company. It supports CRUD operations for users and projects with role-based logic for **Admins**, **Clients**, **Builders**
 
 ---
