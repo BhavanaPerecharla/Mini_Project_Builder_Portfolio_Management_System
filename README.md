@@ -23,17 +23,29 @@ This is a Spring Boot-based mini project that manages user registrations and pro
 
 ## 📁 Project Structure
 com.builder_portfolio_management_systems.project
+
 │
+
 ├── config/ # Spring Security or Swagger configs (optional)
+
 ├── constants/ # Enums like Role and ProjectStatus
+
 ├── controller/ # REST Controllers (API endpoints)
+
 ├── dto/ # Data Transfer Objects (Request/Response)
+
 ├── mapper/ # Mappers to convert between DTOs and Entities
+
 ├── model/ # Entity classes mapped to PostgreSQL tables
+
 ├── repository/ # Spring Data JPA Repositories
+
 ├── service/ # Interfaces for business logic
+
 ├── serviceImpl/ # Implementations of the service interfaces
+
 ├── exception/ # Global exception handling (optional)
+
 └── BuilderPortfolioManagementSystemsApplication.java # Main app class
 
 
