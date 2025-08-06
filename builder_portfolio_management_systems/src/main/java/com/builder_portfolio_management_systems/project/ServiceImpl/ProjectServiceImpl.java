@@ -18,6 +18,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Implementation of ProjectService to handle all business logic related to projects.
+ */
+
 @Service
 @Transactional
 public class ProjectServiceImpl implements ProjectService {
@@ -28,14 +32,25 @@ public class ProjectServiceImpl implements ProjectService {
     @Autowired
     private UserRepository userRepository;
 
+    /**
+     * Creates a new project after validating builder and client roles.
+     *
+     * @param request ProjectRequest containing project and user (builder & client) info.
+     * @return ProjectResponse representing the created project.
+     */
+    
     @Override
     public ProjectResponse createProject(ProjectRequest request) {
+
+        // Validate client
+        
         User client = userRepository.findById(request.getClientId())
                 .orElseThrow(() -> new IllegalArgumentException("Client not found with ID: " + request.getClientId()));
         if (client.getRole() != Role.CLIENT) {
             throw new IllegalArgumentException("User with ID "+ request.getClientId()+" is not a CLIENT");
         }
 
+          // Validate builder
         User builder = userRepository.findById(request.getBuilderId())
                 .orElseThrow(() -> new IllegalArgumentException("Builder not found with ID: " + request.getBuilderId()));
         if (builder.getRole() != Role.BUILDER) {
@@ -47,6 +62,12 @@ public class ProjectServiceImpl implements ProjectService {
         return ProjectMapper.toResponse(saved);
     }
 
+    /**
+     * Fetches and returns all projects from the repository.
+     *
+     * @return List of ProjectResponse.
+     */
+
     @Override
     public List<ProjectResponse> getAllProjects() {
         return projectRepository.findAll()
@@ -55,12 +76,27 @@ public class ProjectServiceImpl implements ProjectService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Retrieves a single project by its ID.
+     *
+     * @param id Project ID.
+     * @return ProjectResponse if found.
+     */
+    
     @Override
     public ProjectResponse getProjectById(Long id) {
         Project project = projectRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Project not found"));
         return ProjectMapper.toResponse(project);
     }
+
+    /**
+     * Updates a project's details by its ID.
+     *
+     * @param id Project ID to update.
+     * @param request ProjectRequest containing updated data.
+     * @return Updated ProjectResponse.
+     */
 
     @Override
     public ProjectResponse updateProject(Long id, ProjectRequest request) {
@@ -82,6 +118,11 @@ public class ProjectServiceImpl implements ProjectService {
         return ProjectMapper.toResponse(updated);
     }
 
+     /**
+     * Deletes a project by its ID.
+     *
+     * @param id Project ID to delete.
+     */
     @Override
     public void deleteProject(Long id) {
         if (!projectRepository.existsById(id)) {
